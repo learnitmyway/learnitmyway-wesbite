@@ -13,7 +13,11 @@
     "titleBar.inactiveForeground": "#15202b99",
     "statusBar.background": "#63a4ff",
     "statusBarItem.hoverBackground": "#3086ff",
-    "statusBar.foreground": "#15202b"
+    "statusBar.foreground": "#15202b",
+    "commandCenter.border": "#15202b99",
+    "sash.hoverBorder": "#96c2ff",
+    "statusBarItem.remoteBackground": "#63a4ff",
+    "statusBarItem.remoteForeground": "#15202b"
   },
   "[html]": {
     "editor.formatOnSave": false
