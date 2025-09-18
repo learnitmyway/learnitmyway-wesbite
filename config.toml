@@ -4,11 +4,13 @@ title = "Learn it my way"
 
 MetaDataFormat = "yaml"
 DefaultContentLanguage = "en"
-Paginate = 6
 enableRobotsTXT = true
-disableKinds = ["taxonomy","taxonomyTerm"]
+disableKinds = ["taxonomy"]
 pygmentsCodeFences = true
 pygmentsUseClasses = true
+
+[pagination]
+  pagerSize = 6
 
 [params]
   description = "David's learning experiences as a self-taught software developer"

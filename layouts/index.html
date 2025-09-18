@@ -13,7 +13,7 @@
   {{ if ge $section_count 1 }}
   {{ $section_name := index (.Site.Params.mainSections) 0 }}
   {{ range $section }}
-  {{ $url := .Params.existingUrl | default .URL }}
+  {{ $url := .Params.existingUrl | default .RelPermalink }}
   <a href="{{ $url }}" class="index-anchor">
     {{ .Render "summary" }}
   </a>
