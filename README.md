@@ -12,7 +12,8 @@ Have a look at [How I release updates to my personal website](https://www.learni
 
 ## Local development
 
-- `mise install` (see node version in `.nvmrc`)
+- `mise install`
+- `brew install hugo` (ideally in sync with netlify.toml)
 - `npm install`
 - `make start`
 
