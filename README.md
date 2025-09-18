@@ -12,6 +12,7 @@ Have a look at [How I release updates to my personal website](https://www.learni
 
 ## Local development
 
+- `mise install` (see node version in `.tool-versions`)
 - `npm install`
 - `make start`
 
