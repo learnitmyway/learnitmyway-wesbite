@@ -13,7 +13,7 @@ browser-sync:
 browser-sync/watch:
 	${browser-sync} --files 'public'
 
-build: postcss imagemin
+build: postcss
 	hugo
 
 imagemin:
