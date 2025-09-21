@@ -164,9 +164,6 @@ html {
   }
 }
 
-.index-share-horizontal {
-  margin: 0.75rem auto;
-}
 .index-anchor {
   display: block;
   background-color: #fff;
@@ -355,40 +352,4 @@ pre code {
 .not-found {
   text-align: center;
   margin: 1rem;
-}
-
-.share-buttons-vertical {
-  display: none;
-  @media (--medium) {
-    z-index: 201;
-    background-color: white;
-    border-radius: 0.4rem;
-    display: block;
-    margin: 0.75rem;
-    margin-top: 100px;
-    position: fixed;
-    top: 0;
-    z-index: 1;
-    text-align: center;
-    box-shadow: var(--card-shadow-4);
-  }
-}
-.share-buttons-vertical__text {
-  padding: 0.25rem;
-  font-size: 0.6rem;
-}
-
-.share-horizontal {
-  @media (--medium) {
-    display: none;
-  }
-}
-
-.share-buttons-horizontal {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.share-button-horizontal {
-  margin: 0.5rem 0.5rem 0 0;
 }

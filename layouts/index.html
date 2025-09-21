@@ -1,9 +1,5 @@
 {{ define "main" }}
-{{ partial "share-buttons-vertical.html" . }}
 <div class="page">
-  <div class="index-share-horizontal share-horizontal">
-    {{ partial "share-buttons-horizontal.html" . }}
-  </div>
   {{ $mainSections := .Site.Params.mainSections | default (slice "post") }}
   {{ $section := where .Site.RegularPages "Section" "in" $mainSections }}
   {{ $section_count := len $section }}
@@ -18,7 +14,4 @@
 
 </div>
 {{ end }}
-{{ end }}
-{{ define "scripts" }}
-  <script src="{{ "js/share-buttons.js" | absURL }}"></script>
 {{ end }}

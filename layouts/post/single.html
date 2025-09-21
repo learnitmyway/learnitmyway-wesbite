@@ -12,7 +12,6 @@
 {{ end }}
 
 {{ define "main" }}
-{{ partial "share-buttons-vertical.html" . }}
 <div class="page">
   <article class="article">
     <time class="article__date" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
@@ -27,11 +26,5 @@
   <div class="article-extra">
     {{ partial "extra-content.html" . }}
   </div>
-  <div class="share-horizontal article-extra">
-    {{ partial "share-buttons-horizontal.html" . }}
-  </div>
 </div>
-{{ end }}
-{{ define "scripts" }}
-  <script src="{{ "js/share-buttons.js" | absURL }}"></script>
 {{ end }}
