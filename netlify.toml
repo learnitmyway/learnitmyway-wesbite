@@ -3,7 +3,7 @@
   command = "make build"
 
 [build.environment]
-  HUGO_VERSION = "0.128.2"
+  HUGO_VERSION = "0.149.1"
   HUGO_ENV = "production"
   NODE_ENV = "production"
 
