@@ -33,4 +33,3 @@ Have a look at [How I release updates to my personal website](https://www.learni
 ## Disclaimers
 
 - Licenses for Software that has been dealt in can be found in the Licenses directory
-- TWITTER, TWEET, RETWEET and the Twitter logo are trademarks of Twitter, Inc. or its affiliates.

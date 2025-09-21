@@ -146,10 +146,6 @@ html {
 .bio .social-icon {
   fill: var(--dark-grey);
 }
-.social-icon--twitter:hover,
-.social-icon--twitter :focus {
-  fill: #1da1f2;
-}
 .social-icon--github:hover,
 .social-icon--github :focus {
   fill: #000;
@@ -228,11 +224,6 @@ article img {
 }
 
 .edit-on-github-container {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.comment-on-twitter-container {
   display: flex;
   justify-content: flex-end;
 }

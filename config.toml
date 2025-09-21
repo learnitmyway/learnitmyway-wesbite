@@ -17,7 +17,6 @@ pygmentsUseClasses = true
   shareImage = "https://res.cloudinary.com/developerdavo/image/upload/f_auto,w_1200/v1590954325/learnitmyway/header.png"
   author = "David"
   about = "Thanks for visiting Learn it my way! I created this website so I could share my learning experiences as a self-taught software developer."
-  twitter = "https://twitter.com/learnitmyway"
   github = "https://github.com/learnitmyway"
 
 [markup]
