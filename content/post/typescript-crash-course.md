@@ -240,3 +240,39 @@ const fruitAndVeg = [apple, broccoli];
 
 Assigning types prevent type inference which can lead to your types being less precise. (See [satisfies](#satisfies) above)
 
+## Enums
+
+Enums seem to have been a historical mistake and might be deprecated in the future.
+
+TypeScript types are typically stripped away after it is compiled to JavaScript. This is not quite the case for enums.
+
+```ts
+// typescript
+export enum AvailabilityEnum {
+  AVAILABLE = "AVAILABLE",
+  UNAVAILABLE = "UNAVAILABLE",
+} 
+
+// javascript
+export var AvailabilityEnum;
+(function (AvailabilityEnum) {
+    AvailabilityEnum["AVAILABLE"] = "AVAILABLE";
+    AvailabilityEnum["UNAVAILABLE"] = "UNAVAILABLE";
+})(AvailabilityEnum || (AvailabilityEnum = {}));
+```
+
+There are better alternatives:
+
+```ts
+const availability = {
+  AVAILABLE: "AVAILABLE",
+  UNAVAILABLE: "UNAVAILABLE",
+} as const 
+```
+
+or even simpler, which is also type safe and has auto completion:
+
+```ts
+type Availability = "AVAILABLE" | "UNAVAILABLE"
+```
+
