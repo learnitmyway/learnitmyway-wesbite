@@ -276,3 +276,60 @@ or even simpler, which is also type safe and has auto completion:
 type Availability = "AVAILABLE" | "UNAVAILABLE"
 ```
 
+## Type narrowing in different scopes
+
+In the following example, function 1 is not able to infer the type properly, but the second function is just fine.
+
+```ts
+const users = [{ name: "Alice" }, { name: "Bob" }];
+
+const findUser = (searchParams: { name?: string }) => {
+  if (searchParams.name) {
+    return users.find((user) => {
+      return user.name.includes(searchParams.name); 
+//                               ^ Error: 'string | undefined' is not assignable to parameter of type 'string'
+    })
+  }
+  return
+};
+
+const findUser2 = (searchParams: { name?: string }) => {
+  return users.find((user) => searchParams.name && user.name.includes(searchParams.name))
+};
+```
+
+The reason there is no type error in the second function is because the scope has changed to be within `find`.
+
+## Additional properties are sometimes ok
+
+TypeScript doesn't always throw an error if additional properties are passed to an object. If you wan to be sure that TypeScript checks for additional properties you have the following possibilities:
+
+```ts
+type Props = { a: string; b: number };
+
+const fn = (props: Props) => {
+  console.log(props)
+};
+
+// additional properties are allowed
+const newLocal = { a: "hello", b: 1, c: "no error" };
+fn(newLocal);
+
+// props are inlined
+fn({ a: "hello", b: 1, c: "error" });
+//                     ^ Error: Object literal may only specify known properties
+
+// props is assigned to Props
+const props: Props = { a: "hello", b: 1, c: "error" };
+//                                       ^ Error: Object literal may only specify known properties
+
+// satisfies key word
+const props2 = { a: "hello", b: 1, c: "error" } satisfies Props;
+//                                    ^ Error: Object literal may only specify known properties
+```
+
+
+
+
+
+
