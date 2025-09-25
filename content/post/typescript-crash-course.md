@@ -328,6 +328,13 @@ const props2 = { a: "hello", b: 1, c: "error" } satisfies Props;
 //                                    ^ Error: Object literal may only specify known properties
 ```
 
+## More resources
+
+- [Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+  - It's a good idea to get familiar with these
+
+
+
 
 
 
