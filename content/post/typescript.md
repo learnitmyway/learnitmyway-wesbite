@@ -1,5 +1,5 @@
 ---
-title: "TypeScript Crash Course"
+title: "(Almost) everything I know about TypeScript"
 type: post
 date: 2025-09-22T20:15:04+02:00
 excerpt: article in progress
@@ -326,6 +326,57 @@ const props: Props = { a: "hello", b: 1, c: "error" };
 // satisfies key word
 const props2 = { a: "hello", b: 1, c: "error" } satisfies Props;
 //                                    ^ Error: Object literal may only specify known properties
+```
+
+## Function overloads
+
+The following function can be overloaded to allow/restrict certain arguments.
+
+```ts
+function greet(nameOrNames: string | string[], lastName?: string): string {
+  if (Array.isArray(nameOrNames)) {
+    return `Hello, ${nameOrNames.join(' and ')}!`;
+  } else if (lastName) {
+    return `Hello, ${nameOrNames} ${lastName}!`;
+  } else {
+    return `Hello, ${nameOrNames}!`;
+  }
+}
+
+const names = greet(["Alice", "Bob", "Charlie"]);
+const john = greet("John", "Doe");
+const alice = greet("Alice");
+const shouldBeInvalid = greet(["Alice", "Bob"], "Smith");
+```
+
+```ts
+function greet(names: string[]): string;
+function greet(firstName: string, lastName: string): string;
+function greet(name: string): string;
+function greet(nameOrNames: string | string[], lastName?: string): string {
+  ...
+}
+```
+
+One thing to watch out for: The implementation signature is not visible from the outside.
+
+```ts
+function fn(x: string): void;
+
+function fn() {}
+
+fn(); // Expected 1 arguments, but got 0
+```
+
+Solution: add another signature.
+
+```ts
+function fn2(x: string): void;
+function fn2(): void;
+
+function fn2() {}
+
+fn2(); // ✅
 ```
 
 ## More resources
