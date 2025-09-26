@@ -55,7 +55,7 @@ fn4("hello")
 
 ### keyof
 
-If you have a object type and want a literal union of its keys.
+If you have an object type and want a literal union of its keys.
 ```ts
 type Obj = { name1: "Alice"; name2: "Bob" };
 type Key = keyof Obj;
@@ -238,7 +238,7 @@ const fruitAndVeg = [apple, broccoli];
 //     ^? (Fruit | Vegetable)[]
 ```
 
-Assigning types prevent type inference which can lead to your types being less precise. (See [satisfies](#satisfies) above)
+Assigning types prevents type inference which can lead to your types being less precise. (See [satisfies](#satisfies) above)
 
 ## Enums
 
@@ -302,7 +302,7 @@ The reason there is no type error in the second function is because the scope ha
 
 ## Additional properties are sometimes ok
 
-TypeScript doesn't always throw an error if additional properties are passed to an object. If you wan to be sure that TypeScript checks for additional properties you have the following possibilities:
+TypeScript doesn't always throw an error if additional properties are passed to an object. If you want to be sure that TypeScript checks for additional properties you have the following possibilities:
 
 ```ts
 type Props = { a: string; b: number };
@@ -379,6 +379,90 @@ function fn2() {}
 fn2(); // ✅
 ```
 
+## Generics
+
+Problem: How do you type `t`?
+
+```ts
+const identityUnknown = (t: unknown) => {
+  return t;
+};
+
+const alice = identityUnknown("alice")
+//     ^ unknown
+```
+
+Solution: Generics
+
+```ts
+// you might need to replace `<T>` with `<T,>`
+const identity = <T>(t: T) => { 
+  return t;
+};
+
+const bob = identity("bob")
+//    ^ bob
+```
+
+Problem: how do we constrain the generic type to a string? In other words, how do we prevent numbers?
+
+```ts
+const three = identity(3)
+//    ^ 3, no error
+```
+
+Solution: `T extends string`.
+
+```ts
+const identityStringOnly = <T extends string>(t: T) => {
+  return t;
+};
+
+identityStringOnly("alice") // all good
+identityStringOnly(3) // error 👍
+```
+
+### You don't always need generics
+
+In this example, `K` isn't needed.
+
+```ts
+function fn<T, K extends keyof T>(obj: T, key: K) {
+  return obj[key]
+}
+```
+
+Solution: replace `K extends keyof T` with `keyof T`.
+
+```ts
+function fn2<T>(obj: T, key: keyof T) {
+  return obj[key]
+}
+
+```
+
+In the following example, `T` might not be needed.
+
+```ts
+type ProductType = "SOFTWARE" | "HARDWARE"
+
+export const doSomethingWithProductTypeNarrowed = async <T extends ProductType>(productType: T) => {
+  return productType
+//       ^ T extends ProductType
+}
+```
+
+We could replace `T` with `ProductType`. However, the return type is wider. In the previous example the return type is either `"SOFTWARE"` or `"HARDWARE"` depending on what is passed in. However, if we replace `T` with `ProductType`, the return type becomes a union that is `"SOFTWARE" | "HARDWARE"`.
+
+```ts
+export const doSomethingWithProductType = async (productType: ProductType) => {
+  return productType
+//       ^ ProductType
+}
+```
+
+The takeaway here is: If a type parameter only appears in one location, reconsider if you actually need it [1].
+
 ## More resources
 
 - [Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
@@ -387,7 +471,4 @@ fn2(); // ✅
 
 
 
-
-
-
-
+[1]: https://effectivetypescript.com/2020/08/12/generics-golden-rule/
