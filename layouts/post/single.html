@@ -18,6 +18,11 @@
       {{ .Date.Format "January 2, 2006" }}
     </time>
     <h1 class="article__title">{{ .Title }}</h1>
+    {{ if and .Params.toc .TableOfContents }}
+    <div class="article__toc nested-links">
+      {{ .TableOfContents }}
+    </div>
+    {{ end }}
     <section class="article__content nested-links">
       {{ .Content }}
     </section>
