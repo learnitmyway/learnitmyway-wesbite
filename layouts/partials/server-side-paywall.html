@@ -1,0 +1,16 @@
+<div class="paywall" data-course-id="{{ .Params.courseId }}">
+  <div class="demo-badge">🚀 Demo Mode</div>
+  <h2 class="paywall__title">Premium Content Available</h2>
+  <p class="paywall__description">
+    This content is protected by server-side delivery.<br>
+    Click below to unlock (demo mode - no payment required).
+  </p>
+  <button 
+    class="paywall__button" 
+    onclick="unlockWithMagicWord('{{ .Params.courseId }}')">
+    🔓 Unlock Premium Content
+  </button>
+  <p style="margin-top: 20px; font-size: 14px; opacity: 0.8;">
+    Content is fetched from server API, not hidden in HTML
+  </p>
+</div>
