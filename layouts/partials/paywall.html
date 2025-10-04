@@ -1,0 +1,39 @@
+<div class="paywall-container" id="paywall" data-course-id="{{ .Params.courseId }}">
+  <div class="paywall-backdrop"></div>
+  <div class="paywall-content">
+    <div class="paywall-card">
+      <h3>🔒 Premium Content</h3>
+      <p>This article is premium content. Purchase once, access from any device.</p>
+      
+      {{ if .Params.priceUSD }}
+      <div class="paywall-price">
+        <span class="price-amount">${{ .Params.priceUSD }}</span>
+        <span class="price-label">one-time payment</span>
+      </div>
+      {{ end }}
+      
+      <div class="paywall-benefits">
+        <h4>What's included:</h4>
+        <ul>
+          <li>✓ Full access to this article</li>
+          <li>✓ Lifetime access</li>
+          <li>✓ <strong>Access from any device</strong></li>
+          <li>✓ Secure payment via Stripe</li>
+        </ul>
+      </div>
+      
+      <div class="paywall-actions">
+        <button class="btn-primary" onclick="purchaseCourse('{{ .Params.courseId }}', '{{ .Params.priceUSD }}', '{{ .Title }}')">
+          Purchase via Stripe
+        </button>
+        <p class="paywall-verify">
+          Already purchased? <a href="#" onclick="verifyAccess('{{ .Params.courseId }}'); return false;">Verify access</a>
+        </p>
+      </div>
+      
+      <div class="paywall-security">
+        <p class="security-note">🔒 Powered by Stripe • No data stored on this site</p>
+      </div>
+    </div>
+  </div>
+</div>
