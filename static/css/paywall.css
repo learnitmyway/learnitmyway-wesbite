@@ -1,0 +1,306 @@
+/* Magic Link Paywall Styles */
+
+/* Paywall container */
+.paywall-container {
+  position: relative;
+  margin: 2rem 0;
+}
+
+.paywall-backdrop {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.95));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.paywall-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.paywall-card {
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.paywall-card h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+
+.paywall-card > p {
+  text-align: center;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+/* Price display */
+.paywall-price {
+  text-align: center;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.price-amount {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #635bff; /* Stripe purple */
+}
+
+.price-label {
+  display: block;
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+/* Benefits list */
+.paywall-benefits {
+  margin: 1.5rem 0;
+}
+
+.paywall-benefits h4 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.paywall-benefits ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.paywall-benefits li {
+  padding: 0.5rem 0;
+  color: #555;
+}
+
+/* Actions */
+.paywall-actions {
+  margin-top: 1.5rem;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: #635bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: #5046e5;
+}
+
+.btn-primary:active {
+  background: #4239d1;
+}
+
+.btn-primary:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #635bff;
+  background: white;
+  border: 2px solid #635bff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0.75rem;
+}
+
+.btn-secondary:hover {
+  background: #f8f7ff;
+}
+
+.paywall-verify {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.paywall-verify a {
+  color: #635bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.paywall-verify a:hover {
+  text-decoration: underline;
+}
+
+/* Security note */
+.paywall-security {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.security-note {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #999;
+  margin: 0;
+}
+
+/* Course badge */
+.course-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  background: #f8f9fa;
+  border-left: 4px solid #635bff;
+  border-radius: 4px;
+}
+
+.course-badge-icon {
+  font-size: 1.5rem;
+}
+
+.course-badge-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.course-badge-title {
+  font-weight: 600;
+  color: #333;
+  text-transform: capitalize;
+}
+
+.course-badge-premium,
+.course-badge-free {
+  margin-left: auto;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.course-badge-premium {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.course-badge-free {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+/* Content preview */
+.article__content--preview {
+  position: relative;
+  max-height: 600px;
+  overflow: hidden;
+}
+
+.article__content--preview::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background: linear-gradient(to bottom, transparent, white);
+  pointer-events: none;
+}
+
+/* Locked content */
+.article__content--locked {
+  display: none;
+}
+
+/* Notifications */
+.paywall-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 1rem 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+  max-width: 400px;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.paywall-notification--success {
+  border-left: 4px solid #10b981;
+  color: #065f46;
+}
+
+.paywall-notification--error {
+  border-left: 4px solid #ef4444;
+  color: #991b1b;
+}
+
+.paywall-notification--info {
+  border-left: 4px solid #3b82f6;
+  color: #1e40af;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .paywall-card {
+    padding: 1.5rem;
+    margin: 0 1rem;
+  }
+  
+  .price-amount {
+    font-size: 2rem;
+  }
+  
+  .course-badge {
+    flex-wrap: wrap;
+  }
+  
+  .paywall-notification {
+    left: 20px;
+    right: 20px;
+  }
+}

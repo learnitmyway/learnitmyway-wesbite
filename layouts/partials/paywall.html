@@ -1,0 +1,40 @@
+<div class="paywall-container" id="paywall" data-course-id="{{ .Params.courseId }}">
+  <div class="paywall-backdrop"></div>
+  <div class="paywall-content">
+    <div class="paywall-card">
+      <h3>🔒 Premium Content</h3>
+      <p>This article is premium content. Purchase once, access from any device with email verification.</p>
+      
+      {{ if .Params.priceUSD }}
+      <div class="paywall-price">
+        <span class="price-amount">${{ .Params.priceUSD }}</span>
+        <span class="price-label">one-time payment</span>
+      </div>
+      {{ end }}
+      
+      <div class="paywall-benefits">
+        <h4>What's included:</h4>
+        <ul>
+          <li>✓ Full access to this article</li>
+          <li>✓ Lifetime access</li>
+          <li>✓ Access from any device via email</li>
+          <li>✓ Secure payment via Stripe</li>
+          <li>✓ Magic link authentication</li>
+        </ul>
+      </div>
+      
+      <div class="paywall-actions">
+        <button class="btn-primary" onclick="purchaseCourse('{{ .Params.courseId }}', '{{ .Params.priceUSD }}', '{{ .Title }}')">
+          Purchase via Stripe
+        </button>
+        <button class="btn-secondary" onclick="requestMagicLink('{{ .Params.courseId }}', '{{ .Title }}')">
+          📧 Already purchased? Get magic link
+        </button>
+      </div>
+      
+      <div class="paywall-security">
+        <p class="security-note">🔒 Powered by Stripe • Magic link sent to your email</p>
+      </div>
+    </div>
+  </div>
+</div>

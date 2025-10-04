@@ -1,0 +1,13 @@
+{{ if .Params.courseId }}
+<div class="course-badge">
+  <span class="course-badge-icon">📄</span>
+  <div class="course-badge-content">
+    <span class="course-badge-title">{{ .Params.courseId }}</span>
+  </div>
+  {{ if .Params.isPremium }}
+  <span class="course-badge-premium">Premium</span>
+  {{ else }}
+  <span class="course-badge-free">Free</span>
+  {{ end }}
+</div>
+{{ end }}
