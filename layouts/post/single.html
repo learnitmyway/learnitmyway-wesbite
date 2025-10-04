@@ -23,9 +23,24 @@
       {{ .TableOfContents }}
     </div>
     {{ end }}
-    <section class="article__content nested-links">
-      {{ .Content }}
-    </section>
+    
+    {{ if .Params.isPremium }}
+      <!-- Premium article: Show preview + paywall + placeholder for server-fetched content -->
+      <section class="article__content--preview nested-links">
+        {{ .Summary }}
+      </section>
+      
+      {{ partial "server-side-paywall.html" . }}
+      
+      <!-- Placeholder for premium content (fetched from API) -->
+      <div id="premium-content" class="article__content nested-links"></div>
+    {{ else }}
+      <!-- Regular article: Show full content -->
+      <section class="article__content nested-links">
+        {{ .Content }}
+      </section>
+    {{ end }}
+    
     {{ partial "article-footer.html" . }}
   </article>
   <div class="article-extra">

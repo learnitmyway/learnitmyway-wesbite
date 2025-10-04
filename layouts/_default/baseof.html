@@ -51,6 +51,9 @@
       data-cf-beacon='{"token": "7d4d1242c45c496383be6737fd1bb89d"}'>
     </script>
     <!-- End Cloudflare Web Analytics -->
+    
+    <!-- Server-side paywall system -->
+    <link rel="stylesheet" href='{{ "css/server-side-paywall.css" | absURL }}'>
   </head>
 
   <body class="body-wrapper">
@@ -68,5 +71,8 @@
       {{ end }}
     </footer>
     {{ block "scripts" . }}{{ end }}
+    
+    <!-- Server-side paywall JavaScript -->
+    <script src='{{ "js/server-side-paywall.js" | absURL }}'></script>
   </body>
 </html>
