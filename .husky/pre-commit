@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Auto-encrypt premium content before committing
+node scripts/auto-encrypt-content.js

@@ -2,3 +2,9 @@
 /public
 dist/
 yarn-error.log
+.env
+
+# Unencrypted premium content (never commit these)
+content/**/*-premium.md
+
+# Encrypted versions are safe to commit (*.enc files)
