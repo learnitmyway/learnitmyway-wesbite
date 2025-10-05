@@ -2,6 +2,7 @@
   "name": "learnitmyway",
   "private": true,
   "dependencies": {
+    "@netlify/functions": "^4.2.7",
     "cssnano": "^4.1.10",
     "imagemin": "^6.1.0",
     "imagemin-cli": "^3.0.0",
