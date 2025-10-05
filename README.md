@@ -21,7 +21,7 @@ Have a look at [How I release updates to my personal website](https://www.learni
 ### test netlify functions locally
 
 - `netlify dev` starts the dev server
-- `curl http://localhost:8888/.netlify/functions/hello` test 
+- `curl http://localhost:8888/.netlify/functions/...` test 
 
 ## Useful commands
 
