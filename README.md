@@ -16,11 +16,17 @@ Have a look at [How I release updates to my personal website](https://www.learni
 - `brew install hugo` (ideally in sync with netlify.toml)
 - `npm install`
 - `make start`
+- `npm install -g netlify-cli`
+
+### test netlify functions locally
+
+- `netlify dev` starts the dev server
+- `curl http://localhost:8888/.netlify/functions/hello` test 
 
 ## Useful commands
 
-- Add new post: `hugo new post/my-first-post.md`
-- Minify all images: `make imagemin`
+- `hugo new post/my-first-post.md` adds a new post
+- `make imagemin` minifies all images
 
 ## Content License
 
