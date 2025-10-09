@@ -36,11 +36,13 @@ async function createCheckoutSession() {
   return stripe.checkout.sessions.create({
     line_items: [
       {
+      // TODO: pass as argument
         price: 'price_1SEqfgAhWhMKvItA3GfwRisL',
         quantity: 1,
       },
     ],
     mode: 'payment',
+    // TODO: pass as argument
     success_url: `${BASE_URL}/success.html`,
     cancel_url: `${BASE_URL}/cancel.html`,
   });
