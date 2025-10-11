@@ -16,12 +16,21 @@ Have a look at [How I release updates to my personal website](https://www.learni
 - `brew install hugo` (ideally in sync with netlify.toml)
 - `npm install`
 - `make start`
+
+### set up netlify
+
 - `npm install -g netlify-cli`
+- `netlify login`
+- `netlify link`
 
 ### test netlify functions locally
 
 - `netlify dev` starts the dev server
-- `curl http://localhost:8888/.netlify/functions/...` test 
+- `curl -v --data '' http://localhost:8888/.netlify/functions/...` 
+
+## Stripe
+
+- [Test cards](https://docs.stripe.com/testing#use-test-cards)
 
 ## Useful commands
 
