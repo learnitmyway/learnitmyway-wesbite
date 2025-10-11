@@ -2,7 +2,6 @@ import type { Context } from "@netlify/functions";
 import Stripe from 'stripe';
 
 const stripe = new Stripe(getPaymentProviderApiKey());
-const BASE_URL = process.env.HUGO_BASEURL || 'http://localhost:8888';
 
 export default async (req: Request, context: Context) => {
   if (req.method !== 'POST') {
@@ -10,7 +9,8 @@ export default async (req: Request, context: Context) => {
   }
 
   try {
-    const session = await createCheckoutSession();
+    const baseUrl = getRequestBaseUrl(req);
+    const session = await createCheckoutSession(baseUrl);
 
     return new Response(null, {
       status: 303,
@@ -32,7 +32,12 @@ function getPaymentProviderApiKey() {
   return apiKey;
 }
 
-async function createCheckoutSession() {
+function getRequestBaseUrl(req: Request): string {
+  const url = new URL(req.url);
+  return `${url.protocol}//${url.host}`;
+}
+
+async function createCheckoutSession(baseUrl: string) {
   return stripe.checkout.sessions.create({
     line_items: [
       {
@@ -43,8 +48,8 @@ async function createCheckoutSession() {
     ],
     mode: 'payment',
     // TODO: pass as argument
-    success_url: `${BASE_URL}/success.html`,
-    cancel_url: `${BASE_URL}/cancel.html`,
+    success_url: `${baseUrl}/success.html`,
+    cancel_url: `${baseUrl}/cancel.html`,
   });
 }
 
