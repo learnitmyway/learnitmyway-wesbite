@@ -2,7 +2,7 @@ import type { Context } from "@netlify/functions";
 import Stripe from 'stripe';
 
 const stripe = new Stripe(getPaymentProviderApiKey());
-const BASE_URL = process.env.HUGO_BASE_URL || 'http://localhost:8888';
+const BASE_URL = process.env.HUGO_BASEURL || 'http://localhost:8888';
 
 export default async (req: Request, context: Context) => {
   if (req.method !== 'POST') {
