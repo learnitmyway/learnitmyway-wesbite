@@ -17,10 +17,25 @@ Have a look at [How I release updates to my personal website](https://www.learni
 - `npm install`
 - `make start`
 
+### set up netlify
+
+- `npm install -g netlify-cli`
+- `netlify login`
+- `netlify link`
+
+### test netlify functions locally
+
+- `netlify dev` starts the dev server
+- `curl -v --data '' http://localhost:8888/.netlify/functions/...` 
+
+## Stripe
+
+- [Test cards](https://docs.stripe.com/testing#use-test-cards)
+
 ## Useful commands
 
-- Add new post: `hugo new post/my-first-post.md`
-- Minify all images: `make imagemin`
+- `hugo new post/my-first-post.md` adds a new post
+- `make imagemin` minifies all images
 
 ## Content License
 
