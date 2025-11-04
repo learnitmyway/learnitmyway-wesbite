@@ -50,6 +50,7 @@ async function createCheckoutSession(baseUrl: string) {
     // TODO: pass as argument
     success_url: `${baseUrl}/success.html`,
     cancel_url: `${baseUrl}/cancel.html`,
+    customer_creation: 'always', // Ensures a Customer object is created when email is entered during checkout
   });
 }
 
