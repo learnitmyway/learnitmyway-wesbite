@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+  <title>Payment Successful | {{ .Site.Title }}</title>
+  <link href='{{ "dist/styles.css" | absURL }}' rel='stylesheet' type="text/css" />
+  <link rel="stylesheet" href='{{ "css/paywall.css" | absURL }}'>
+</head>
+<body class="body-wrapper">
+  <div class="page" style="max-width: 600px; margin: 60px auto; padding: 40px;">
+    <h1 style="color: #004ba0; margin-bottom: 24px;">Payment Successful!</h1>
+    <div style="background-color: #d4edda; color: #155724; padding: 16px; border-radius: 4px; margin-bottom: 24px; border: 1px solid #c3e6cb;">
+      <p style="margin: 0; font-size: 1.1em;">
+        <strong>Thank you for your purchase!</strong>
+      </p>
+    </div>
+    <div style="line-height: 1.8; color: #333; margin-bottom: 32px;">
+      <p>We've sent a magic link to your email address. Click the link in the email to access your premium content.</p>
+      <p style="color: #666; font-size: 0.95em;">
+        <strong>Note:</strong> The link will expire in 30 days, but you can request a new one anytime if you've already paid.
+      </p>
+    </div>
+    <div id="resend-section" style="margin-top: 32px; padding-top: 32px; border-top: 1px solid #e0e0e0;">
+      <h2 style="font-size: 1.3em; margin-bottom: 16px;">Didn't receive the email?</h2>
+      <div id="resend-form">
+        <input 
+          type="email" 
+          id="resend-email-input" 
+          placeholder="Enter your email" 
+          required
+          style="width: 100%; max-width: 300px; padding: 12px; font-size: 16px; border: 2px solid #e0e0e0; border-radius: 4px; margin-bottom: 12px; box-sizing: border-box;"
+        >
+        <br>
+        <button 
+          id="resend-submit-btn" 
+          class="paywall-button paywall-button-primary"
+          style="margin-top: 8px;"
+        >
+          Resend Access Link
+        </button>
+        <div id="resend-message" class="paywall-message" style="margin-top: 16px;"></div>
+      </div>
+    </div>
+    <div style="margin-top: 40px; text-align: center;">
+      <a href="/" class="paywall-button paywall-button-secondary">Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const articleSlug = new URLSearchParams(window.location.search).get('articleSlug');
+      if (!articleSlug) {
+        document.getElementById('resend-section').style.display = 'none';
+        return;
+      }
+
+      const emailInput = document.getElementById('resend-email-input');
+      const submitBtn = document.getElementById('resend-submit-btn');
+      const messageDiv = document.getElementById('resend-message');
+
+      submitBtn.addEventListener('click', async () => {
+        const email = emailInput.value.trim();
+        if (!email) {
+          messageDiv.textContent = 'Please enter your email address.';
+          messageDiv.className = 'paywall-message paywall-message-error';
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+        messageDiv.textContent = '';
+        messageDiv.className = 'paywall-message';
+
+        try {
+          const response = await fetch('/.netlify/functions/resend-magic-link', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: email,
+              articleSlug: articleSlug,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok && data.success) {
+            messageDiv.textContent = 'Access link sent! Please check your email.';
+            messageDiv.className = 'paywall-message paywall-message-success';
+            emailInput.value = '';
+          } else {
+            messageDiv.textContent = data.message || 'If a payment record exists, a link has been sent.';
+            messageDiv.className = 'paywall-message paywall-message-info';
+          }
+        } catch (error) {
+          console.error('Error resending magic link:', error);
+          messageDiv.textContent = 'An error occurred. Please try again.';
+          messageDiv.className = 'paywall-message paywall-message-error';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Resend Access Link';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
+

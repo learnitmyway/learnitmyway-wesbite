@@ -16,3 +16,7 @@
 
 [context.production.environment]
   HUGO_BASEURL = "https://learnitmyway.com/"
+
+# Note: Netlify KV namespace must be created in Netlify dashboard
+# and bound to functions via the Netlify UI or CLI
+# The namespace will be accessible via context.kv in functions
