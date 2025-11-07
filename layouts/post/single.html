@@ -33,3 +33,16 @@
   </div>
 </div>
 {{ end }}
+
+{{ define "scripts" }}
+  {{ if .Params.premium }}
+    {{ $priceId := .Params.priceId | default "price_1SEqfgAhWhMKvItA3GfwRisL" }}
+    <link rel="stylesheet" href='{{ "css/paywall.css" | absURL }}'>
+    <script>
+      // Set premium article data
+      document.body.dataset.premium = 'true';
+      document.body.dataset.priceId = '{{ $priceId }}';
+    </script>
+    <script src='{{ "js/magic-link-paywall.js" | absURL }}'></script>
+  {{ end }}
+{{ end }}

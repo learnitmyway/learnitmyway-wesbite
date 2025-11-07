@@ -1,7 +1,5 @@
 import type { Context } from "@netlify/functions";
-import Stripe from 'stripe';
-
-const stripe = new Stripe(getPaymentProviderApiKey());
+import { createPaymentProvider } from "../../lib/payment-providers/stripe.ts";
 
 export default async (req: Request, context: Context) => {
   if (req.method !== 'POST') {
@@ -10,7 +8,38 @@ export default async (req: Request, context: Context) => {
 
   try {
     const baseUrl = getRequestBaseUrl(req);
-    const session = await createCheckoutSession(baseUrl);
+    
+    // Get request body
+    const body = await req.json().catch(() => ({}));
+    const { priceId, articleSlug, email } = body;
+
+    if (!priceId || !articleSlug) {
+      return new Response(JSON.stringify({ error: 'Missing priceId or articleSlug' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Get payment provider
+    const paymentProviderName = process.env.PAYMENT_PROVIDER || 'stripe';
+    const paymentApiKey = process.env.PAYMENT_PROVIDER_API_KEY;
+    
+    if (!paymentApiKey) {
+      throw new Error('PAYMENT_PROVIDER_API_KEY is not set in environment variables');
+    }
+
+    const paymentProvider = createPaymentProvider(paymentProviderName, paymentApiKey);
+
+    // Create checkout session with metadata
+    const session = await paymentProvider.createCheckoutSession({
+      priceId,
+      successUrl: `${baseUrl}/success.html?articleSlug=${encodeURIComponent(articleSlug)}`,
+      cancelUrl: `${baseUrl}/cancel.html`,
+      metadata: {
+        articleSlug,
+        ...(email && { email }),
+      },
+    });
 
     return new Response(null, {
       status: 303,
@@ -24,32 +53,8 @@ export default async (req: Request, context: Context) => {
   }
 }
 
-function getPaymentProviderApiKey() {
-  const apiKey = process.env.PAYMENT_PROVIDER_API_KEY;
-  if (!apiKey) {
-    throw new Error('PAYMENT_PROVIDER_API_KEY is not set in environment variables');
-  }
-  return apiKey;
-}
-
 function getRequestBaseUrl(req: Request): string {
   const url = new URL(req.url);
   return `${url.protocol}//${url.host}`;
-}
-
-async function createCheckoutSession(baseUrl: string) {
-  return stripe.checkout.sessions.create({
-    line_items: [
-      {
-      // TODO: pass as argument
-        price: 'price_1SEqfgAhWhMKvItA3GfwRisL',
-        quantity: 1,
-      },
-    ],
-    mode: 'payment',
-    // TODO: pass as argument
-    success_url: `${baseUrl}/success.html`,
-    cancel_url: `${baseUrl}/cancel.html`,
-  });
 }
 
