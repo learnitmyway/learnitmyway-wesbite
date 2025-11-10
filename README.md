@@ -23,14 +23,32 @@ Have a look at [How I release updates to my personal website](https://www.learni
 - `netlify login`
 - `netlify link`
 
+### set up stripe
+
+- `brew install stripe-cli`
+- `stripe login`
+
+### start dev server
+
+- start dev server `netlify dev`
+
 ### test netlify functions locally
 
-- `netlify dev` starts the dev server
 - `curl -v --data '' http://localhost:8888/.netlify/functions/...` 
+
+### test webhook with Stripe
+
+- `stripe listen --forward-to http://localhost:8888/.netlify/functions/payment-webhook`
+- `stripe trigger checkout.session.completed`
+
 
 ## Stripe
 
 - [Test cards](https://docs.stripe.com/testing#use-test-cards)
+
+## Environment variables
+
+Environment Variables are stored in Netlify and are accessed during local development with the Netlify CLI
 
 ## Useful commands
 

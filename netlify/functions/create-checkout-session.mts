@@ -1,5 +1,6 @@
 import type { Context } from "@netlify/functions";
 import Stripe from 'stripe';
+import { getPaymentProviderApiKey } from "./_shared/payment.mts";
 
 const stripe = new Stripe(getPaymentProviderApiKey());
 
@@ -22,14 +23,6 @@ export default async (req: Request, context: Context) => {
     console.error('Error creating checkout session:', error);
     return new Response('Internal Server Error', { status: 500 });
   }
-}
-
-function getPaymentProviderApiKey() {
-  const apiKey = process.env.PAYMENT_PROVIDER_API_KEY;
-  if (!apiKey) {
-    throw new Error('PAYMENT_PROVIDER_API_KEY is not set in environment variables');
-  }
-  return apiKey;
 }
 
 function getRequestBaseUrl(req: Request): string {
