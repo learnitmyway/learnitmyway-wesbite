@@ -1,6 +1,7 @@
 import type { Context } from '@netlify/functions';
 import Stripe from 'stripe';
 import { getPaymentProviderApiKey } from './_shared/payment.mts';
+import { storePaymentRecord } from './_shared/payment-storage.mts';
 
 const stripe = new Stripe(getPaymentProviderApiKey());
 
@@ -102,9 +103,40 @@ export default async (req: Request, context: Context) => {
     console.log('🆔 Payment ID:', paymentId);
     console.log('📎 Metadata:', JSON.stringify(metadata));
 
+    const articleSlug = metadata.articleSlug;
+    if (!articleSlug) {
+      console.error('❌ No articleSlug found in checkout session metadata');
+      return new Response(
+        JSON.stringify({ error: 'No articleSlug found in payment metadata' }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    console.log('📄 Article slug:', articleSlug);
+
+    try {
+      await storePaymentRecord(email, articleSlug, paymentId);
+      console.log('✅ Payment record stored successfully');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      console.error('❌ Failed to store payment record:', message);
+      return new Response(
+        JSON.stringify({ 
+          error: 'Payment verified but failed to store payment record',
+          details: message 
+        }),
+        {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
     // TODO: Generate token
     // TODO: Store token in Netlify KV
-    // TODO: Store payment record in Netlify KV
     // TODO: Send magic link email
 
     console.log('✅ Webhook processed successfully');
