@@ -34,13 +34,12 @@ Have a look at [How I release updates to my personal website](https://www.learni
 
 ### test netlify functions locally
 
-- `curl -v --data '' http://localhost:8888/.netlify/functions/...` 
+- `curl -v --data '{"articleSlug": "example-premium-article"' http://localhost:8888/.netlify/functions/...` 
 
-### test webhook with Stripe
+### test webhook with Stripe locally
 
 - `stripe listen --forward-to http://localhost:8888/.netlify/functions/payment-webhook`
 - `stripe trigger checkout.session.completed`
-
 
 ## Stripe
 

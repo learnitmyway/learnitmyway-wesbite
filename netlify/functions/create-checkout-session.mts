@@ -11,7 +11,21 @@ export default async (req: Request, context: Context) => {
 
   try {
     const baseUrl = getRequestBaseUrl(req);
-    const session = await createCheckoutSession(baseUrl);
+    
+    const body = await req.json();
+    const articleSlug = body.articleSlug;
+
+    if (!articleSlug || typeof articleSlug !== 'string') {
+      return new Response(
+        JSON.stringify({ error: 'articleSlug is required and must be a string' }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    const session = await createCheckoutSession(baseUrl, articleSlug);
 
     return new Response(null, {
       status: 303,
@@ -21,7 +35,14 @@ export default async (req: Request, context: Context) => {
     });
   } catch (error) {
     console.error('Error creating checkout session:', error);
-    return new Response('Internal Server Error', { status: 500 });
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    return new Response(
+      JSON.stringify({ error: 'Internal Server Error', details: message }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
   }
 }
 
@@ -30,7 +51,7 @@ function getRequestBaseUrl(req: Request): string {
   return `${url.protocol}//${url.host}`;
 }
 
-async function createCheckoutSession(baseUrl: string) {
+async function createCheckoutSession(baseUrl: string, articleSlug: string) {
   return stripe.checkout.sessions.create({
     line_items: [
       {
@@ -43,6 +64,9 @@ async function createCheckoutSession(baseUrl: string) {
     // TODO: pass as argument
     success_url: `${baseUrl}/success.html`,
     cancel_url: `${baseUrl}/cancel.html`,
+    metadata: {
+      articleSlug: articleSlug,
+    },
   });
 }
 
