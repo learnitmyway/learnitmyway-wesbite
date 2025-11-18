@@ -2,6 +2,7 @@ import type { Context } from '@netlify/functions';
 import Stripe from 'stripe';
 import { getPaymentProviderApiKey } from './_shared/payment.mts';
 import { storePaymentRecord } from './_shared/payment-storage.mts';
+import { storeToken } from './_shared/token-storage.mts';
 
 const stripe = new Stripe(getPaymentProviderApiKey());
 
@@ -135,8 +136,31 @@ export default async (req: Request, context: Context) => {
       );
     }
 
-    // TODO: Generate token
-    // TODO: Store token in Netlify KV
+    const tokenUuid = crypto.randomUUID();
+    const tokenExpirationDays = 30;
+    const expiresAtUtc = new Date();
+    expiresAtUtc.setDate(expiresAtUtc.getDate() + tokenExpirationDays);
+    const expiresAtUtcString = expiresAtUtc.toISOString();
+
+    try {
+      await storeToken({ articleSlug, uuid: tokenUuid, email, expiresAtUtc: expiresAtUtcString });
+      console.log('✅ Token stored successfully');
+      console.log('🔑 Token UUID:', tokenUuid);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      console.error('❌ Failed to store token:', message);
+      return new Response(
+        JSON.stringify({ 
+          error: 'Payment verified but failed to store token',
+          details: message 
+        }),
+        {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
     // TODO: Send magic link email
 
     console.log('✅ Webhook processed successfully');
@@ -144,7 +168,7 @@ export default async (req: Request, context: Context) => {
     return new Response(
       JSON.stringify({ 
         received: true,
-        message: 'Webhook processed (token generation not yet implemented)'
+        message: 'Webhook processed successfully'
       }),
       {
         status: 200,
