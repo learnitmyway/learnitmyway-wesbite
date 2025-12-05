@@ -41,6 +41,11 @@ Have a look at [How I release updates to my personal website](https://www.learni
 - `stripe listen --forward-to http://localhost:8888/.netlify/functions/payment-webhook`
 - `stripe trigger checkout.session.completed`
 
+### query db locally
+
+- `netlify blobs:list <db> --json`
+  - keep in mind that running netlify locally doesn't have access to the remote db
+
 ## Stripe
 
 - [Test cards](https://docs.stripe.com/testing#use-test-cards)

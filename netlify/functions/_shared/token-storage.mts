@@ -35,3 +35,39 @@ export async function storeToken(
     throw new Error(`Failed to store token: ${message}`);
   }
 }
+
+export async function getToken(
+  articleSlug: string,
+  uuid: string
+): Promise<TokenRecord | null> {
+  const store = getTokensStore();
+  const key = getTokenKey(articleSlug, uuid);
+
+  try {
+    const tokenData = await store.get(key);
+    if (!tokenData) {
+      return null;
+    }
+    const decoder = new TextDecoder();
+    const text = decoder.decode(tokenData);
+    return JSON.parse(text) as TokenRecord;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error(`❌ Failed to get token: ${message}`);
+    throw new Error(`Failed to get token: ${message}`);
+  }
+}
+
+export async function renewToken(
+  articleSlug: string,
+  uuid: string,
+  email: string
+): Promise<void> {
+  const tokenExpirationDays = 30;
+  const expiresAtUtc = new Date();
+  expiresAtUtc.setDate(expiresAtUtc.getDate() + tokenExpirationDays);
+  const expiresAtUtcString = expiresAtUtc.toISOString();
+
+  await storeToken({ articleSlug, uuid, email, expiresAtUtc: expiresAtUtcString });
+  console.log(`✅ Token renewed: ${getTokenKey(articleSlug, uuid)}`);
+}
