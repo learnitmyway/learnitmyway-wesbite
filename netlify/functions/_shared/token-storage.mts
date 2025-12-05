@@ -44,13 +44,12 @@ export async function getToken(
   const key = getTokenKey(articleSlug, uuid);
 
   try {
-    const tokenData = await store.get(key);
+    const tokenData = await store.get(key, { type: 'text' });
     if (!tokenData) {
       return null;
     }
-    const decoder = new TextDecoder();
-    const text = decoder.decode(tokenData);
-    return JSON.parse(text) as TokenRecord;
+    // tokenData is already a string when using type: 'text'
+    return JSON.parse(tokenData) as TokenRecord;
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error(`❌ Failed to get token: ${message}`);
