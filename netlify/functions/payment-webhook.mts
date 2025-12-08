@@ -3,6 +3,7 @@ import Stripe from 'stripe';
 import { getPaymentProviderApiKey } from './_shared/payment.mts';
 import { storePaymentRecord } from './_shared/payment-storage.mts';
 import { storeToken } from './_shared/token-storage.mts';
+import { generateMagicLink } from './_shared/magic-link.mts';
 
 const stripe = new Stripe(getPaymentProviderApiKey());
 
@@ -160,6 +161,9 @@ export default async (req: Request, context: Context) => {
         }
       );
     }
+
+    const magicLink = generateMagicLink(articleSlug, tokenUuid);
+    console.log('🔗 Magic link:', magicLink);
 
     // TODO: Send magic link email
 
