@@ -84,7 +84,7 @@ export default async (req: Request, context: Context) => {
 
     // Redirect to article page
     // Netlify automatically appends the original query string to the redirect url if we don't override it
-    const articleUrl = `/${articleSlug}`;
+    const articleUrl = `/${articleSlug}?redirected=true`;
 
     console.log('🍪 Setting cookie and redirecting to:', articleUrl);
 
