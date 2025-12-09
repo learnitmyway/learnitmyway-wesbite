@@ -83,7 +83,8 @@ export default async (req: Request, context: Context) => {
     const cookieValue = `${articleSlug}=${token}; HttpOnly; Secure; SameSite=Lax; Expires=${cookieExpires}; Path=/`;
 
     // Redirect to article page
-    const articleUrl = `/${articleSlug}/`;
+    // Netlify automatically appends the original query string to the redirect url if we don't override it
+    const articleUrl = `/${articleSlug}/?`;
 
     console.log('🍪 Setting cookie and redirecting to:', articleUrl);
 
