@@ -1,5 +1,6 @@
 import type { Context } from '@netlify/functions';
 import { getToken } from './_shared/token-storage.mts';
+import { getRequestBaseUrl } from './_shared/request-utils.mts';
 
 export default async (req: Request, context: Context) => {
   console.log('🔗 Magic link access request received');
@@ -82,8 +83,9 @@ export default async (req: Request, context: Context) => {
     const cookieExpires = expiresAt.toUTCString();
     const cookieValue = `${articleSlug}=${token}; HttpOnly; Secure; SameSite=Lax; Expires=${cookieExpires}; Path=/`;
 
-    // Redirect to article page
-    const articleUrl = `/${articleSlug}/`;
+    // Redirect to article page with absolute URL (ensures token is removed from URL)
+    const baseUrl = getRequestBaseUrl(req);
+    const articleUrl = `${baseUrl}/${articleSlug}/`;
 
     console.log('🍪 Setting cookie and redirecting to:', articleUrl);
 
