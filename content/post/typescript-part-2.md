@@ -5,9 +5,12 @@ date: 2025-10-05
 excerpt: Learn TypeScript generics, advanced type manipulation, utility types, and type guards. Build reusable, type-safe components and APIs.
 url: typescript-part-2
 canonical: true
+premium: true
 ---
 
 Welcome to Part 2 of our TypeScript series! In [Part 1](/typescript-part-1), we covered the fundamentals. Now we'll explore TypeScript's powerful advanced features that enable you to write truly reusable, type-safe code.
+
+<div class="premium-content">
 
 ## Generics
 
@@ -636,3 +639,5 @@ These advanced features enable you to build robust, maintainable applications wi
 - [Type Challenges](https://github.com/type-challenges/type-challenges)
 
 ← [Part 1: Fundamentals](/typescript-part-1) | Continue to [Part 3: Advanced Patterns →](/typescript-part-3)
+
+</div>

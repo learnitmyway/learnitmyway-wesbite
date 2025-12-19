@@ -80,7 +80,7 @@ export default async (req: Request, context: Context) => {
     // Set cookie with articleSlug as name and token as value
     // Cookie expires at the same time as the token
     const cookieExpires = expiresAt.toUTCString();
-    const cookieValue = `${articleSlug}=${token}; HttpOnly; Secure; SameSite=Lax; Expires=${cookieExpires}; Path=/`;
+    const cookieValue = `${articleSlug}=${token}; Secure; SameSite=Lax; Expires=${cookieExpires}; Path=/`;
 
     // Redirect to article page
     // Netlify automatically appends the original query string to the redirect url if we don't override it
