@@ -30,7 +30,7 @@
 
   async function verifyToken(articleSlug, token) {
     try {
-      const response = await fetch('/verify-token', {
+      const response = await fetch('/.netlify/functions/verify-token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
