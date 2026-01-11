@@ -7,3 +7,4 @@ https://learnitmyway.netlify.com/* https://learnitmyway.com/:splat 301!
 /gatsby-vs-hugo/ https://medium.freecodecamp.org/gatsby-vs-hugo-a-detailed-comparison-e78d94f640fc 301!
 /learn-firebase/ https://medium.com/@developerdavo/learn-firebase-web-with-these-resources-c080b8f05603 301!
 /newsletter https://tinyletter.com/learnitmyway 302!
+/access* /.netlify/functions/access/:splat 200

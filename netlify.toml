@@ -2,6 +2,10 @@
   publish = "public"
   command = "make build"
 
+[dev]
+# TODO: make this work with `make start`
+  command = "hugo server -w"
+
 [build.environment]
   HUGO_VERSION = "0.147.9"
   HUGO_ENV = "production"
