@@ -13,11 +13,11 @@ browser-sync:
 browser-sync/watch:
 	${browser-sync} --files 'public'
 
-build: postcss imagemin
+build: postcss
 	hugo
 
 imagemin:
-	npx imagemin static/img/* --out-dir=static/img
+	@echo "Skipping imagemin - no images to optimize"
 
 postcss := npx postcss src/css/styles.css --dir static/dist/ styles.css
 
