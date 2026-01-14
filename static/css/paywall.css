@@ -1,0 +1,159 @@
+/* Paywall Styles */
+
+.paywall-overlay {
+  position: relative;
+  min-height: 400px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.98));
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 60px 40px;
+  margin: 40px 0;
+  text-align: center;
+}
+
+.paywall-content {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.paywall-content h2 {
+  font-size: 2em;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.paywall-content > p {
+  font-size: 1.1em;
+  color: #666;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.paywall-button {
+  display: inline-block;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 8px;
+}
+
+.paywall-button-primary {
+  background-color: #004ba0;
+  color: white;
+}
+
+.paywall-button-primary:hover {
+  background-color: #003d80;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 75, 160, 0.3);
+}
+
+.paywall-button-secondary {
+  background-color: transparent;
+  color: #004ba0;
+  border: 2px solid #004ba0;
+}
+
+.paywall-button-secondary:hover {
+  background-color: #004ba0;
+  color: white;
+}
+
+.paywall-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.paywall-divider {
+  margin: 24px 0;
+  position: relative;
+  text-align: center;
+}
+
+.paywall-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+.paywall-divider span {
+  position: relative;
+  background: white;
+  padding: 0 16px;
+  color: #999;
+}
+
+.paywall-resend-form {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.paywall-resend-form input {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.paywall-resend-form input:focus {
+  outline: none;
+  border-color: #004ba0;
+}
+
+.paywall-message {
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.paywall-message-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.paywall-message-info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+.paywall-message-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .paywall-overlay {
+    padding: 40px 20px;
+    margin: 20px 0;
+  }
+
+  .paywall-content h2 {
+    font-size: 1.5em;
+  }
+
+  .paywall-button {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+  }
+}
+
