@@ -1,5 +1,5 @@
 import type { Context } from '@netlify/functions';
-import { getToken } from './_shared/token-storage.mts';
+import { validateToken } from './_shared/validate-token.mts';
 
 interface VerifyTokenResponse {
   valid: boolean;
@@ -50,52 +50,27 @@ export default async (req: Request, context: Context) => {
     console.log('📄 Article slug:', articleSlug);
     console.log('🔑 Token UUID:', token);
 
-    // Retrieve token record
-    let tokenRecord;
-    try {
-      tokenRecord = await getToken(articleSlug, token);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : 'Unknown error';
-      console.error('❌ Failed to retrieve token:', message);
-      return new Response(
-        JSON.stringify({ error: 'Failed to verify token' }),
-        {
-          status: 500,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+    const result = await validateToken(articleSlug, token);
+
+    if (!result.success) {
+      if (result.status === 500) {
+        return new Response(
+          JSON.stringify({ error: 'Failed to verify token' }),
+          {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' },
+          }
+        );
+      }
+      return new Response(JSON.stringify({ valid: false }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
 
-    if (!tokenRecord) {
-      console.log('❌ Token not found');
-      return new Response(
-        JSON.stringify({ valid: false }),
-        {
-          status: 401,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
-    }
-
-    const now = new Date();
-    const expiresAt = new Date(tokenRecord.expiresAtUtc);
-    const isExpired = now >= expiresAt;
-
-    if (isExpired) {
-      console.log('❌ Token is expired');
-      return new Response(
-        JSON.stringify({ valid: false }),
-        {
-          status: 401,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
-    }
-
-    console.log('✅ Token is valid');
     const response: VerifyTokenResponse = {
       valid: true,
-      expiresAt: tokenRecord.expiresAtUtc,
+      expiresAt: result.tokenRecord.expiresAtUtc,
     };
     return new Response(JSON.stringify(response), {
       status: 200,
