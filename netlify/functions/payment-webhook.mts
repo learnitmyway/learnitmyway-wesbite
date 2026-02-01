@@ -5,6 +5,7 @@ import { storePaymentRecord } from './_shared/payment-storage.mts';
 import { storeToken } from './_shared/token-storage.mts';
 import { generateMagicLink } from './_shared/magic-link.mts';
 import { getRequestBaseUrl } from './_shared/request-utils.mts';
+import { sendMagicLinkEmail } from './_shared/email.mts';
 
 const stripe = new Stripe(getPaymentProviderApiKey());
 
@@ -167,7 +168,14 @@ export default async (req: Request, context: Context) => {
     const magicLink = generateMagicLink(baseUrl, articleSlug, tokenUuid);
     console.log('🔗 Magic link:', magicLink);
 
-    // TODO: Send magic link email
+    try {
+      await sendMagicLinkEmail({ to: email, magicLink, articleSlug });
+      console.log('✅ Magic link email sent');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      console.error('❌ Failed to send magic link email (payment and token stored):', message);
+      // Option A: still return 200; user has access; future "resend link" can compensate
+    }
 
     console.log('✅ Webhook processed successfully');
 
