@@ -14,13 +14,13 @@ Have a look at [How I release updates to my personal website](https://www.learni
 
 - `mise install`
 - `brew install hugo` (ideally in sync with netlify.toml)
+- `npm install -g netlify-cli`
 - `npm install`
-- `make start`
+- `make dev`
 
 ## Useful commands
 
 - Add new post: `hugo new post/my-first-post.md`
-- Minify all images: `make imagemin`
 
 ## Content License
 

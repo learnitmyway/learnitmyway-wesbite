@@ -2,6 +2,11 @@
   publish = "public"
   command = "make build"
 
+[dev]
+  command = "hugo server -w"
+  targetPort = 1313
+  autoLaunch = true
+
 [build.environment]
   HUGO_VERSION = "0.147.9"
   HUGO_ENV = "production"
