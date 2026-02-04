@@ -2,5 +2,4 @@
 /public
 dist/
 yarn-error.log
-# Local Netlify folder
 .netlify

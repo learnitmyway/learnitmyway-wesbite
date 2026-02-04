@@ -3,8 +3,9 @@
   command = "make build"
 
 [dev]
-# TODO: make this work with `make start`
   command = "hugo server -w"
+  targetPort = 1313
+  autoLaunch = true
 
 [build.environment]
   HUGO_VERSION = "0.147.9"

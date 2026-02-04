@@ -12,10 +12,15 @@ Have a look at [How I release updates to my personal website](https://www.learni
 
 ## Local development
 
+### set up netlify
+
 - `mise install`
 - `brew install hugo` (ideally in sync with netlify.toml)
+- `npm install -g netlify-cli`
+- `netlify login`
+- `netlify link`
 - `npm install`
-- `make start`
+- `make dev`
 
 ### set up netlify
 
@@ -57,7 +62,6 @@ Environment Variables are stored in Netlify and are accessed during local develo
 ## Useful commands
 
 - `hugo new post/my-first-post.md` adds a new post
-- `make imagemin` minifies all images
 
 ## Content License
 
