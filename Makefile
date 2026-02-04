@@ -1,7 +1,6 @@
 .PHONY: \
 	browser-sync browser-sync/watch \
 	build \
-	imagemin \
 	postcss postcss/watch \
 	start
 
@@ -15,9 +14,6 @@ browser-sync/watch:
 
 build: postcss
 	hugo
-
-imagemin:
-	@echo "Skipping imagemin - no images to optimize"
 
 postcss := npx postcss src/css/styles.css --dir static/dist/ styles.css
 
