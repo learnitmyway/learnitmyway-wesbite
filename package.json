@@ -2,7 +2,6 @@
   "name": "learnitmyway",
   "private": true,
   "dependencies": {
-    "cssnano": "^4.1.10",
     "imagemin-cli": "^3.0.0",
     "normalize.css": "^8.0.1",
     "postcss": "^7.0.17",
