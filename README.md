@@ -12,9 +12,13 @@ Have a look at [How I release updates to my personal website](https://www.learni
 
 ## Local development
 
+### set up netlify
+
 - `mise install`
 - `brew install hugo` (ideally in sync with netlify.toml)
 - `npm install -g netlify-cli`
+- `netlify login`
+- `netlify link`
 - `npm install`
 - `make dev`
 
