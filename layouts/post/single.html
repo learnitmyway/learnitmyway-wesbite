@@ -12,7 +12,9 @@
 {{ end }}
 
 {{ define "main" }}
-<div class="page">
+<div class="page" 
+     data-article-slug="{{ .Params.url }}"
+     {{ if .Params.premium }}data-premium-article="true"{{ end }}>
   <article class="article">
     <time class="article__date" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
       {{ .Date.Format "January 2, 2006" }}
@@ -31,5 +33,21 @@
   <div class="article-extra">
     {{ partial "extra-content.html" . }}
   </div>
+  {{ if .Params.premium }}
+  <div class="paywall" style="display: none;">
+    <div class="paywall__content">
+      <h2 class="paywall__title">Premium Content</h2>
+      <p class="paywall__message">This content is available to premium subscribers. Please purchase access to continue reading.</p>
+      <button class="paywall__button" disabled>Purchase Access</button>
+      <p class="paywall__note">(Payment integration coming soon)</p>
+    </div>
+  </div>
+  {{ end }}
 </div>
+{{ end }}
+
+{{ define "scripts" }}
+  {{ if .Params.premium }}
+  <script src='{{ "js/premium-access.js" | absURL }}'></script>
+  {{ end }}
 {{ end }}

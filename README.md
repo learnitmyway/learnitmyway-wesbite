@@ -22,9 +22,46 @@ Have a look at [How I release updates to my personal website](https://www.learni
 - `npm install`
 - `make dev`
 
+### set up netlify
+
+- `npm install -g netlify-cli`
+- `netlify login`
+- `netlify link`
+
+### set up stripe
+
+- `brew install stripe-cli`
+- `stripe login`
+
+### start dev server
+
+- start dev server `netlify dev`
+
+### test netlify functions locally
+
+- `curl -v --data '{"articleSlug": "example-premium-article"' http://localhost:8888/.netlify/functions/...` 
+
+### test webhook with Stripe locally
+
+- `stripe listen --forward-to http://localhost:8888/.netlify/functions/payment-webhook`
+- `stripe trigger checkout.session.completed`
+
+### query db from local machine
+
+- `netlify blobs:list <db> --json`
+  - keep in mind that the netlify dev server does not have access to the remote db. I don't know how to have a local db
+
+## Stripe
+
+- [Test cards](https://docs.stripe.com/testing#use-test-cards)
+
+## Environment variables
+
+Environment Variables are stored in Netlify and are accessed during local development with the Netlify CLI
+
 ## Useful commands
 
-- Add new post: `hugo new post/my-first-post.md`
+- `hugo new post/my-first-post.md` adds a new post
 
 ## Content License
 

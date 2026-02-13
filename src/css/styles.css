@@ -344,3 +344,72 @@ pre code {
   text-align: center;
   margin: 1rem;
 }
+
+.premium-content {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.premium-content.premium-hidden {
+  display: none;
+}
+
+.paywall {
+  margin: 1.5rem auto 0;
+  padding: 2rem 1.5rem;
+  box-shadow: var(--card-shadow-4);
+  background-color: #fff;
+  text-align: center;
+}
+
+.paywall__content {
+  max-width: 30rem;
+  margin: 0 auto;
+}
+
+.paywall__title {
+  font-family: athelas, georgia, serif;
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--black-8);
+}
+
+.paywall__message {
+  color: var(--black-6);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.paywall__button {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.25em;
+  font-family: 'avenir next', avenir, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease-in;
+  margin-bottom: 0.5rem;
+}
+
+.paywall__button:hover:not(:disabled),
+.paywall__button:focus:not(:disabled) {
+  background-color: var(--primary-light);
+  opacity: 0.9;
+}
+
+.paywall__button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.paywall__note {
+  font-size: 0.875rem;
+  color: var(--dark-grey);
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  font-style: italic;
+}
