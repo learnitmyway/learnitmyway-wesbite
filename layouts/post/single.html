@@ -18,14 +18,25 @@
       {{ .Date.Format "January 2, 2006" }}
     </time>
     <h1 class="article__title">{{ .Title }}</h1>
+    {{ partial "course-badge.html" . }}
     {{ if and .Params.toc .TableOfContents }}
     <div class="article__toc nested-links">
       {{ .TableOfContents }}
     </div>
     {{ end }}
+    {{ if .Params.isPremium }}
+    <section class="article__content article__content--preview nested-links">
+      {{ .Summary }}
+    </section>
+    {{ partial "paywall.html" . }}
+    <div class="article__content--locked" id="premium-content">
+      {{ .Content }}
+    </div>
+    {{ else }}
     <section class="article__content nested-links">
       {{ .Content }}
     </section>
+    {{ end }}
     {{ partial "article-footer.html" . }}
   </article>
   <div class="article-extra">
