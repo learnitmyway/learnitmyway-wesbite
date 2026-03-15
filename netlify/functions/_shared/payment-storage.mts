@@ -39,3 +39,23 @@ export async function storePaymentRecord(
     throw new Error(`Failed to store payment record: ${message}`);
   }
 }
+
+export async function getPaymentRecord(
+  email: string,
+  articleSlug: string
+): Promise<PaymentRecord | null> {
+  const store = getPaymentsStore();
+  const key = getPaymentRecordKey(email, articleSlug);
+
+  try {
+    const data = await store.get(key, { type: 'text' });
+    if (!data) {
+      return null;
+    }
+    return JSON.parse(data) as PaymentRecord;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error(`❌ Failed to get payment record: ${message}`);
+    throw new Error(`Failed to get payment record: ${message}`);
+  }
+}

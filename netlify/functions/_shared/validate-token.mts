@@ -1,5 +1,6 @@
 import type { TokenRecord } from './token-storage.mts';
-import { getToken } from './token-storage.mts';
+import { getToken, renewToken } from './token-storage.mts';
+import { getPaymentRecord } from './payment-storage.mts';
 
 export type ValidateTokenSuccess = { success: true; tokenRecord: TokenRecord };
 export type ValidateTokenFailure =
@@ -31,6 +32,21 @@ export async function validateToken(
   const isExpired = now >= expiresAt;
 
   if (isExpired) {
+    const paymentRecord = await getPaymentRecord(tokenRecord.email, articleSlug);
+    if (paymentRecord) {
+      try {
+        await renewToken(articleSlug, token, tokenRecord.email);
+        const updatedRecord = await getToken(articleSlug, token);
+        if (updatedRecord) {
+          console.log('✅ Token renewed (expired but payment record exists)');
+          return { success: true, tokenRecord: updatedRecord };
+        }
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        console.error('❌ Failed to renew token:', message);
+        return { success: false, status: 500 };
+      }
+    }
     console.log('❌ Token is expired');
     return { success: false, status: 401, reason: 'expired' };
   }
