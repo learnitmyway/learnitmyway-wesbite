@@ -51,6 +51,10 @@ Have a look at [How I release updates to my personal website](https://www.learni
 - `netlify blobs:list <db> --json`
   - keep in mind that the netlify dev server does not have access to the remote db. I don't know how to have a local db
 
+## Resend
+
+- see [Resend](./docs/resend.md)
+
 ## Stripe
 
 - [Test cards](https://docs.stripe.com/testing#use-test-cards)
