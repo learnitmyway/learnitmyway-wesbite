@@ -33,6 +33,19 @@ Summary of the magic link–based authentication system for premium content, for
    - `premium-access.js` reads cookie by article slug, calls `verify-token` with articleSlug + token.
    - `verify-token` uses same `validateToken` (including renewal when expired + payment exists). Frontend shows or hides premium content based on response.
 
+4. **Resend magic link (email + articleSlug)**
+   - User visits the premium article page and sees a small form or UI for “Didn’t get the email?”.
+   - They provide their email (article slug comes from the page itself or is submitted explicitly).
+   - Frontend sends a `POST` request to `/.netlify/functions/resend-magic-link` with `{ email, articleSlug }` in the JSON body.
+   - The function:
+     - Looks up a `PaymentRecord` for `(email, articleSlug)` via `getPaymentRecord`.
+     - If **no payment record exists** or something goes wrong, returns a generic failure (`{ success: false, error: '...' }`) so we don’t reveal purchase status.
+     - If a payment record exists, creates a **new token UUID** (30-day expiry, same as initial flow), stores it via `storeToken`, generates a magic link with `generateMagicLink`, and sends it via `sendMagicLinkEmail`.
+   - Response shape:
+     - Success: HTTP 200 with `{ success: true }`.
+     - Generic failure (no payment / privacy-preserving): HTTP 200 with `{ success: false, error: string }`.
+     - Validation or server errors: HTTP 4xx/5xx with `{ success: false, error: string }`.
+
 ## Auto-renewal (expired tokens)
 
 If a token is expired but a payment record exists for that email + article:
@@ -46,6 +59,7 @@ If a token is expired but a payment record exists for that email + article:
 - `netlify/functions/access.mts` – magic link handler; sets cookie and redirects.
 - `netlify/functions/verify-token.mts` – token verification for page load (cookie path).
 - `netlify/functions/payment-webhook.mts` – payment completion; stores payment + token, sends magic link email.
+- `netlify/functions/resend-magic-link.mts` – resend endpoint; checks for existing payment and sends a fresh magic link when allowed.
 - `netlify/functions/create-checkout-session.mts` – creates checkout session with article metadata.
 - `netlify/functions/_shared/validate-token.mts` – validates token and performs renewal when expired + payment exists.
 - `netlify/functions/_shared/token-storage.mts` – token CRUD and `renewToken`.
@@ -57,6 +71,5 @@ If a token is expired but a payment record exists for that email + article:
 
 ## Possible next features
 
-- Resend magic link (endpoint that looks up email by article/token and sends a new link).
 - Configurable token expiry or max renewals.
 - Different payment or email provider via existing abstractions.
