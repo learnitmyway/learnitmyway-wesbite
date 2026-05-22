@@ -12,7 +12,7 @@ Have a look at [How I release updates to my personal website](https://www.learni
 
 ## Local development
 
-### set up netlify
+### set up
 
 - `mise install`
 - `brew install hugo` (ideally in sync with netlify.toml)
@@ -21,12 +21,6 @@ Have a look at [How I release updates to my personal website](https://www.learni
 - `netlify link`
 - `npm install`
 - `make dev`
-
-### set up netlify
-
-- `npm install -g netlify-cli`
-- `netlify login`
-- `netlify link`
 
 ### set up stripe
 
