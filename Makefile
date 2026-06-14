@@ -1,10 +1,14 @@
 .PHONY: \
 	build \
 	dev \
+	test \
 	postcss postcss/watch \
 
-build: postcss
+build: test postcss
 	hugo
+
+test:
+	npm test
 
 dev:
 	npx parallelshell 'netlify dev' 'make postcss/watch'

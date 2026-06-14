@@ -2,6 +2,9 @@
   publish = "public"
   command = "make build"
 
+[functions]
+  directory = "netlify/functions"
+
 [dev]
   command = "hugo server -w"
   targetPort = 1313
